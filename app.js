@@ -1,18 +1,13 @@
 // ===================================
-// The Echo Box - Complete JavaScript
-// Version: 5.0 FINAL - Background Fix
-// Last Updated: January 2026
+// The Echo Box - 使用在线背景图版本
+// 不需要本地 assets 文件夹
 // ===================================
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    // =======================================================
-    // 1. 环境判官 (Smart Domain Detection)
-    // =======================================================
     function getTheme() {
         const hostname = window.location.hostname.toLowerCase();
         
-        // LoveScribe - 包含 "lovescribe" 关键词
         if (hostname.includes('lovescribe')) {
             return {
                 css: 'themes/theme-lovescribe.css',
@@ -22,11 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 buttonText: 'SEAL OUR VOW',
                 gumroadLink: 'https://samzhu168.gumroad.com/l/sjuokv',
                 certificateTitle: 'CERTIFICATE OF ETERNAL LOVE',
-                backgroundImage: '/assets/lovescribe_bg.jpg' // ✅ 背景图路径
+                // ✅ 使用在线图片
+                backgroundImage: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=1920&h=1080&fit=crop'
             };
         }
         
-        // FutureBloom - 包含 "futurebloom" 关键词
         if (hostname.includes('futurebloom')) {
             return {
                 css: 'themes/theme-futurebloom.css',
@@ -36,11 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 buttonText: 'SEND TO THE FUTURE',
                 gumroadLink: 'https://samzhu168.gumroad.com/l/htoqgu',
                 certificateTitle: 'LETTER TO THE FUTURE',
-                backgroundImage: '/assets/futurebloom_bg.jpg' // ✅ 背景图路径
+                backgroundImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop'
             };
         }
         
-        // The Echo Box - 默认主题（包括所有其他域名）
         return {
             css: 'themes/theme-echobox.css',
             title: 'The Echo Box',
@@ -49,15 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
             buttonText: 'IMPRINT INTO ETERNITY',
             gumroadLink: 'https://samzhu168.gumroad.com/l/fmrrxr',
             certificateTitle: 'CERTIFICATE OF LEGACY',
-            backgroundImage: '/assets/echobox_bg.jpg' // ✅ 背景图路径
+            backgroundImage: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=1080&fit=crop'
         };
     }
     
     const currentTheme = getTheme();
 
-    // =======================================================
-    // 2. 动态注入皮肤和内容 (Dynamic Injection)
-    // =======================================================
     function applyTheme(theme) {
         const head = document.head;
         const existingTheme = document.getElementById('theme-stylesheet');
@@ -83,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             paymentButton.href = theme.gumroadLink;
         }
         
-        // ✅✅✅ 关键修复：直接在 JS 中设置背景图 ✅✅✅
+        // ✅ 设置背景图 - 直接使用完整 URL
         if (theme.backgroundImage) {
             document.body.style.backgroundImage = `url('${theme.backgroundImage}')`;
             document.body.style.backgroundSize = 'cover';
@@ -95,9 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     applyTheme(currentTheme);
 
-    // =======================================================
-    // 3. 核心应用逻辑 (Core Application Logic)
-    // =======================================================
+    // ==================== 以下是原有功能代码 ====================
+    
     const imprintButton = document.getElementById('imprint-button');
     const legacyText = document.getElementById('legacy-text');
     const resultSection = document.getElementById('result-section');
@@ -185,9 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // =======================================================
-    // 4. 证书生成函数 (完整实现)
-    // =======================================================
     function generateCertificate(text, withWatermark) {
         const width = canvas.width;
         const height = canvas.height;
@@ -287,9 +274,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.stroke();
     }
     
-    // =======================================================
-    // 5. 文本自动换行函数 (完整实现)
-    // =======================================================
     function wrapText(context, text, x, y, maxWidth, lineHeight) {
         const words = text.split(' ');
         let line = '';
@@ -321,23 +305,12 @@ document.addEventListener('DOMContentLoaded', () => {
         context.fillText(line.trim(), x, y);
     }
     
-    // =======================================================
-    // 6. 辅助函数
-    // =======================================================
     function generateCertificateId() {
         const prefix = currentTheme.title.substring(0, 2).toUpperCase();
         const timestamp = Date.now().toString(36).toUpperCase();
         const random = Math.random().toString(36).substring(2, 6).toUpperCase();
         return `${prefix}-${timestamp}-${random}`;
     }
-    
-    // =======================================================
-    // 7. 错误处理和日志
-    // =======================================================
-    console.log(`✅ Theme loaded: ${currentTheme.title}`);
-    console.log(`🌐 Domain: ${window.location.hostname}`);
-    console.log(`💳 Gumroad Link: ${currentTheme.gumroadLink}`);
-    console.log(`🖼️ Background Image: ${currentTheme.backgroundImage}`);
     
     window.addEventListener('error', (event) => {
         console.error('Application error:', event.error, event.message);
